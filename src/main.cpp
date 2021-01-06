@@ -4,8 +4,8 @@
 #include <NewPing.h>
 
 //Network credetials
-const char * ssid = "shepherd";
-const char * password = "BVrIVumj2Ji1repEC5K29GX4";
+const char * ssid = "wifi_name";
+const char * password = "wifi_password";
 
 //Initialize bot token(from Bot Father)
 #define BOT_TOKEN "1509649201:AAFKRc4HnNlvENHhFbTVtzSvbnS19eU29Hg"
@@ -97,7 +97,7 @@ void setup() {
 
 unsigned int measure_distance(){
     unsigned int max_distance = 26;
-    unsigned int depth = sonar.ping_cm();
+    unsigned int depth = sonar.ping_median((uint8_t)100, 24);
     depth = depth - max_distance;
     Serial.printf("depth :");
     Serial.println(depth);
@@ -144,7 +144,7 @@ void telegram(const char* msg, unsigned int depth){
 
 void loop() {
 
-    if(!(millis() - timeout > 5000)){
+    if(!(millis() - timeout > 3600000)){ //send to telegram every hour
         return;
     }
 
